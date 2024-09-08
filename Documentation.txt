@@ -1,3 +1,52 @@
-Replace The MongoDB Atlas Cluster0 URI if you want to see all the collections data.
+1) Replace the below MongoDB Atlas Cluster0 URI if you want to see all the collections data.
 
-MONGODB_URI="mongodb+srv://virenchauhan1100:viren123@cluster0.a93vk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    MONGODB_URI="mongodb+srv://virenchauhan1100:viren123@cluster0.a93vk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+2) Inputs : i)      book name or a term in the name of the book
+            ii)     rent price range
+            iii)    category + name/term + rent per day(range)
+            
+->  Use - http://localhost:4000/api/books/  (GET)
+
+    and pass the field like only bookname, only renge, or category + name/term + rent per day(range) as body.
+
+OUTPUT -    i)  list of all the books with that name or term in the book name
+            ii) list of books with rent in that range
+            iii)list of books with matching values as in input
+
+3) INPUT - book name + person name/userId + issue date (BOOK IS ISSUED)
+
+->  Use - http://localhost:4000/api/transactions/issue (POST)
+
+    and pass the field like only bookname, username + issuedAt as body.
+
+4) INPUT - book name + person name/userId + return date (BOOK IS
+RETURNED)
+
+->  Use - http://localhost:4000/api/transactions/return (PUT)
+
+    and pass the field like only bookname, username + returnedAt as body.
+    
+OUTPUT - calculate rent based on issue date and return date and update
+the transaction DB with these values.
+
+5) INPUT - Book name Or Person’s name/userId    (GET)
+
+->  Use - http://localhost:4000/api/transactions/search/:key
+
+as a key pass = Book name or  Person’s name/userId  (GET)
+
+6) Input - Date range
+
+    Use - http://localhost:4000/api/transactions/search (GET)
+
+    pass from and to in a date formate
+
+
+
+Helper APIs:
+
+To get the list of all the users. => http://localhost:4000/api/users
+To get the list of all the books. => http://localhost:4000/api/books
+
+

@@ -1,10 +1,11 @@
+const Book = require("../models/book.model");
 const Transaction = require("../models/transactions.model");
 const User = require("../models/user.model");
 
 const createTransaction = async (req, res, next) => {
-  const { bookname, rent, username, issuedAt } = req.body;
+  const { bookname, username, issuedAt } = req.body;
   try {
-    if (!bookname || !rent || !username || !issuedAt) {
+    if (!bookname || !username || !issuedAt) {
       throw Error("Enter all the required fields!!!");
     }
 
@@ -14,7 +15,16 @@ const createTransaction = async (req, res, next) => {
       throw Error("User not fount!!");
     }
 
+    const bookExist = await Book.find({
+      $or: [{ bookname: { $regex: bookname } }],
+    });
+
+    if (!bookExist.length) {
+      throw Error("Book not fount!!");
+    }
+
     const userId = await userExist[0]._id.toString();
+    const rent = await bookExist[0].rent;
 
     const transactions = await Transaction.create({
       bookname,
@@ -97,8 +107,13 @@ const getBookTransactionDetail = async (req, res) => {
     if (!transactionDetail.length) {
       return res.status(404).send({ result: "Book not found!!" });
     }
+    let totalAmount = await countTotalRentGenerated(transactionDetail);
 
-    return res.status(200).send(transactionDetail);
+    return res.status(200).json({
+      transactionDetail,
+      total: transactionDetail.length,
+      totalAmount,
+    });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
@@ -155,6 +170,19 @@ const countTotalAmount = (issuedAt, returnedAt, rent) => {
 
   let day = Math.ceil(dayDiff);
   let totalAmount = day * rent;
+  return totalAmount;
+};
+
+const countTotalRentGenerated = async (transactionDetail) => {
+  let startRent = 0;
+
+  let totalRent = transactionDetail.map((item) => {
+    return (startRent += item.amount);
+  });
+
+  let totalAmount = totalRent.reduce((acc, curr) => acc + curr);
+  console.log(totalAmount);
+  
   return totalAmount;
 };
 

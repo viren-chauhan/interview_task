@@ -13,8 +13,8 @@ const transactionRoute = require("./src/router/transactionRoutes");
 // });
 app.use(express.json());
 app.use("/api/books", bookRoute);
-app.use("/api/user", userRoute);
-app.use("/api/transaction", transactionRoute);
+app.use("/api/users", userRoute);
+app.use("/api/transactions", transactionRoute);
 
 connectDB()
   .then(() => {
