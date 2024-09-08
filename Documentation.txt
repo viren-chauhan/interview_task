@@ -1,0 +1,3 @@
+Replace The MongoDB Atlas Cluster0 URI if you want to see all the collections data.
+
+MONGODB_URI="mongodb+srv://virenchauhan1100:viren123@cluster0.a93vk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
