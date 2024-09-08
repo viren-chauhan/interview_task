@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r dotenv/config --experimental-json-modules ./server.js",
-    "prepack": "npm run build"
+    "build": "webpack --config webpack.conf.js"
   },
   "author": "viren chauhan",
   "license": "ISC",
